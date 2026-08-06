@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - esbuild
+  - simple-git-hooks
+  - workerd
+  - '@parcel/watcher'
+  - '@tailwindcss/oxide'
+  - sharp
+  - unrs-resolver
+  - vue-demi
