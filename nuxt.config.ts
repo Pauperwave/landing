@@ -37,6 +37,9 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2024-07-30',
 
+  // Blob storage: the local filesystem in development. With S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY
+  // and S3_BUCKET (or S3_ENDPOINT) set at build time, the module uses the S3 driver, here Cloudflare
+  // R2 behind a site served from Vercel; it picks S3 before Vercel Blob.
   hub: {
     blob: true
   },

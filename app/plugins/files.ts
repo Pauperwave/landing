@@ -4,7 +4,7 @@ export default defineNuxtPlugin(() => {
   const images = ref()
   const router = useRouter()
   const toast = useToast()
-  // https://hub.nuxt.com/docs/storage/blob#useupload
+  // https://hub.nuxt.com/docs/blob/upload
   const upload = useUpload('/api/images/upload', { multiple: false })
 
   async function getImages() {

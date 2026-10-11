@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlobObject } from '@nuxthub/core'
+import type { BlobObject } from '@nuxthub/core/blob'
 import { decodeImageSlug } from '../utils/url.ts'
 
 const bottomMenu = ref<HTMLElement>()

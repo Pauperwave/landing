@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlobObject } from '@nuxthub/core'
+import type { BlobObject } from '@nuxthub/core/blob'
 
 const thumbnails = ref<HTMLUListElement>()
 const x = ref<number>(0)

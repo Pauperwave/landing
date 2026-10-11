@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlobObject } from '@nuxthub/core'
+import type { BlobObject } from '@nuxthub/core/blob'
 
 const route = useRoute()
 const { images } = useFile()

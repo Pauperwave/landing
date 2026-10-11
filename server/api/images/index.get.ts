@@ -1,5 +1,5 @@
 export default eventHandler(async () => {
-  const { blobs } = await hubBlob().list({
+  const { blobs } = await blob.list({
     limit: 1000
   })
 

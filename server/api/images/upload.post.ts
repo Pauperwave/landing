@@ -1,8 +1,8 @@
 export default eventHandler(async (event) => {
   await requireUserSession(event)
 
-  // https://hub.nuxt.com/docs/storage/blob#handleupload
-  return hubBlob().handleUpload(event, {
+  // https://hub.nuxt.com/docs/blob/upload
+  return blob.handleUpload(event, {
     multiple: false,
     put: {
       addRandomSuffix: true

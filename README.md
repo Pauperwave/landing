@@ -1,16 +1,18 @@
 # Pauperwave - Landing
 
-Landing page e galleria foto degli eventi dell'associazione [Pauperwave](https://pauperwave.org), basata su [NuxtHub Blob](https://hub.nuxt.com/docs/storage/blob) (starting point: [nuxt-image-gallery](https://github.com/Flosciante/nuxt-image-gallery)).
+Landing page e galleria foto degli eventi dell'associazione [Pauperwave](https://pauperwave.org), basata su [NuxtHub Blob](https://hub.nuxt.com/docs/blob) (starting point: [nuxt-image-gallery](https://github.com/Flosciante/nuxt-image-gallery)).
 
 ## Features
 
-- 📷 Upload e visualizzazione foto tramite [`hubBlob()`](http://hub.nuxt.com/docs/storage/blob)
-- 🌐 Storage su Cloudflare R2 tramite NuxtHub
+- 📷 Upload e visualizzazione foto tramite [`blob`](https://hub.nuxt.com/docs/blob/usage)
+- 🌐 Storage su Cloudflare R2 tramite NuxtHub (driver S3)
 - 🔑 Accesso admin protetto da password ([nuxt-auth-utils](https://github.com/Atinux/nuxt-auth-utils)) per caricare le foto dei nuovi eventi
 
 ## Stack
 
-- [NuxtHub](https://hub.nuxt.com) - toolkit Nuxt per applicazioni fullstack su edge (Cloudflare)
+- [NuxtHub](https://hub.nuxt.com) - astrazione dello storage blob (filesystem in sviluppo, S3/R2 in produzione)
+- [Vercel](https://vercel.com) - hosting; il dominio `pauperwave.org` è già lì
+- [Cloudflare R2](https://developers.cloudflare.com/r2/) - storage delle foto, raggiunto dall'API S3
 - [NuxtUI v3](https://ui.nuxt.com/getting-started) - libreria UI (Radix Vue + Tailwind CSS v4)
 - [Nuxt Fonts](https://github.com/nuxt/fonts)
 - [VueUse](https://github.com/antfu/vueuse)
@@ -29,6 +31,7 @@ Landing page e galleria foto degli eventi dell'associazione [Pauperwave](https:/
 
 - `NUXT_ADMIN_PASSWORD` - password per accedere al pannello admin e caricare le foto (default `admin` se non impostata, da cambiare in produzione)
 - `NUXT_SESSION_PASSWORD` - chiave per la cifratura della sessione, generata automaticamente in dev se non presente
+- `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_BUCKET`, `S3_REGION` (`auto` per R2), `S3_ENDPOINT` (`https://<account id>.r2.cloudflarestorage.com`) - bucket R2 delle foto. Vanno impostate **già alla build** (su Vercel valgono per Build e Runtime): è la loro presenza a far scegliere il driver S3; senza, in produzione il modulo userebbe Vercel Blob. In sviluppo i file stanno in `.data`
 
 ## Sviluppo
 
@@ -36,23 +39,13 @@ Landing page e galleria foto degli eventi dell'associazione [Pauperwave](https:/
 pnpm dev
 ```
 
-### Storage remoto
-
-Dopo il deploy, per collegarsi in locale allo storage remoto:
-
-```bash
-pnpm dev --remote
-```
+In sviluppo le foto si salvano su filesystem (`.data`), senza nessuna variabile S3.
 
 ### Deploy
 
-Deploy su Cloudflare tramite NuxtHub:
+Il sito va su Vercel (collegato al repository, build `pnpm build`), con le variabili d'ambiente sopra. Le foto stanno su un bucket Cloudflare R2, raggiunto con il driver S3 di NuxtHub, scelto in automatico dalle variabili `S3_*`.
 
-```bash
-npx nuxthub deploy
-```
-
-Maggiori dettagli su https://hub.nuxt.com/docs/getting-started/deploy
+Una volta sola, nella dashboard di Cloudflare: creare il bucket, una chiave API R2 con permessi di lettura e scrittura sul bucket, e copiare l'endpoint S3 dell'account.
 
 ## Aggiornare le foto degli eventi
 

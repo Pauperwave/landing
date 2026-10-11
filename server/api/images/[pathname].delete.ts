@@ -5,5 +5,5 @@ export default eventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing image pathname' })
   }
 
-  return hubBlob().del(pathname)
+  return blob.del(pathname)
 })

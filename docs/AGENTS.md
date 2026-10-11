@@ -4,7 +4,7 @@ Linee guida per chi (umano o agente) lavora su questo repo.
 
 ## Stack
 
-Nuxt 4 + NuxtHub (Cloudflare/R2) + Nuxt UI v3 (Tailwind v4) + TypeScript. Vedi [architecture/overview.md](architecture/overview.md).
+Nuxt 4 + NuxtHub 0.10 (blob su Cloudflare R2 via S3) su Vercel + Nuxt UI v3 (Tailwind v4) + TypeScript. Vedi [architecture/overview.md](architecture/overview.md).
 
 ## Convenzioni
 

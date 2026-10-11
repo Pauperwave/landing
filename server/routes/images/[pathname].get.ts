@@ -5,5 +5,5 @@ export default eventHandler(async (event) => {
     pathname: z.string().min(1)
   }).parse)
 
-  return hubBlob().serve(event, pathname)
+  return blob.serve(event, pathname)
 })

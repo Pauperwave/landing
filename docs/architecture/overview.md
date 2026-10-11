@@ -3,7 +3,8 @@
 ## Stack
 
 - **Nuxt 4** (Vue 3) — framework fullstack
-- **NuxtHub** — deploy edge su Cloudflare, storage blob (`hubBlob()`) su Cloudflare R2
+- **NuxtHub 0.10** — astrazione dello storage blob (`blob` da `hub:blob`): filesystem in sviluppo, Cloudflare R2 via API S3 in produzione
+- **Vercel** — hosting (il dominio `pauperwave.org` è già su Vercel DNS); l'app è la stessa Nuxt, nessuna dipendenza da Cloudflare a runtime tranne R2
 - **Nuxt UI v3** — componenti UI (Radix Vue + Tailwind CSS v4)
 - **nuxt-auth-utils** — sessione cifrata, autenticazione admin a singola password
 
@@ -13,7 +14,7 @@
 2. `app/pages/index.vue` mostra `ImageGallery.vue`: griglia masonry delle immagini, drag&drop/upload (solo se loggati), login modale.
 3. `app/pages/detail/[...slug].vue` mostra `ImageDetail.vue`: immagine singola con navigazione prev/next (tastiera, swipe touch), download, apertura originale in nuova tab.
 4. `app/pages/siti.vue` (`/siti`) è una pagina semplice con l'elenco di tutti i siti di Pauperwave (nome, descrizione e sottodominio, con link). L'elenco è scritto a mano nella pagina; gli host che reindirizzano nel gestionale sono quelli di `HOST_ROUTE_MAP` nel progetto `app`. Lo strip di miniature e il layout a colonna di `app.vue` valgono solo sulle pagine `/detail`, quindi `/siti` ne è libera.
-5. Upload e cancellazione immagini passano da `app/composables/useFile.ts` → `app/plugins/files.ts` (plugin che espone `$file`) → `server/api/images/` (endpoint NuxtHub Blob).
+5. Upload e cancellazione immagini passano da `app/composables/useFile.ts` → `app/plugins/files.ts` (plugin che espone `$file`) → `server/api/images/` (endpoint che usano `blob` di NuxtHub).
 6. Login admin: `app/components/LoginForm.vue` → `POST /server/api/auth.post.ts`, verifica contro `NUXT_ADMIN_PASSWORD`, crea sessione via `nuxt-auth-utils`.
 
 ## Cosa NON c'è (rimosso rispetto al template originale)
