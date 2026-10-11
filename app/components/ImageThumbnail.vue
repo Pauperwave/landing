@@ -31,7 +31,7 @@ function isCurrentImage(pathname: string) {
         height="51"
         :src="`/images/${thumbnail.pathname}`"
         :alt="thumbnail.key"
-        class="object-cover rounded-md transition-all duration-500 hover:brightness-100 w-[83px] h-[51px]"
+        class="object-cover rounded-md transition-all duration-500 hover:brightness-100 w-20.75 h-12.75"
         :class="isCurrentImage(thumbnail.pathname) ? 'active brightness-100' : 'opacity-75 brightness-50'"
       >
     </NuxtLink>

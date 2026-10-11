@@ -62,7 +62,7 @@ async function clearSession() {
     <section
       v-if="images"
       ref="dropZoneRef"
-      class="relative h-screen gap-[22px] p-4"
+      class="relative h-screen gap-5.5 p-4"
     >
       <BottomMenu class="bottom-menu">
         <template #logo>
@@ -73,7 +73,7 @@ async function clearSession() {
           >
         </template>
         <template #description>
-          <p class="bottom-menu-description text-sm sm:text-base leading-tight sm:leading-normal">
+          <p class="bottom-menu-description text-sm/tight sm:text-base/normal  ">
             Pauperwave - Eventi
           </p>
         </template>
@@ -134,7 +134,7 @@ async function clearSession() {
         </div>
         <div
           v-else
-          class="text-2xl text-white flex flex-col gap-y-4 items-center justify-center h-full w-full pb-8"
+          class="text-2xl text-white flex flex-col gap-y-4 items-center justify-center size-full  pb-8"
         >
           <h1 class="font-medium text-5xl">
             Pauperwave
@@ -159,7 +159,7 @@ async function clearSession() {
               :loading="deletingImg === image.pathname"
               color="gray"
               icon="i-heroicons-trash-20-solid"
-              class="absolute top-4 right-4 z-[9999] opacity-0 group-hover:opacity-100"
+              class="absolute top-4 right-4 z-9999 opacity-0 group-hover:opacity-100"
               @click="deleteFile(image.pathname)"
             />
             <NuxtLink
@@ -172,7 +172,7 @@ async function clearSession() {
                 height="430"
                 :src="`/images/${image.pathname}`"
                 :class="{ imageEl: image.pathname.split('.')[0] === active }"
-                class="h-auto w-full max-h-[430px] rounded-md transition-all duration-200 border-image brightness-[.8] hover:brightness-100 will-change-[filter] object-cover"
+                class="h-auto w-full max-h-107.5 rounded-md transition-all duration-200 border-image brightness-[.8] hover:brightness-100 will-change-[filter] object-cover"
               >
             </NuxtLink>
           </li>
@@ -184,11 +184,11 @@ async function clearSession() {
       class="flex items-center space-x-4 z-10"
     >
       <USkeleton
-        class="h-12 w-12 rounded-full bg-white-500"
+        class="size-12  rounded-full bg-white-500"
       />
       <div class="space-y-2">
-        <USkeleton class="h-4 w-[250px] bg-white-500" />
-        <USkeleton class="h-4 w-[200px] bg-white-500" />
+        <USkeleton class="h-4 w-62.5 bg-white-500" />
+        <USkeleton class="h-4 w-50 bg-white-500" />
       </div>
     </div>
   </div>

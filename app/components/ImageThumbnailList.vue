@@ -37,11 +37,11 @@ router.afterEach(async (to, _) => {
 </script>
 
 <template>
-  <div class="bg-black/10 backdrop-blur-md top-0 h-[68px] absolute overflow-hidden w-screen">
+  <div class="bg-black/10 backdrop-blur-md top-0 h-17 absolute overflow-hidden w-screen">
     <ul
       v-if="images && images.length"
       ref="thumbnails"
-      class="fixed top-2 left-0 right-0 mr-8 whitespace-nowrap overflow-x-scroll"
+      class="fixed top-2 inset-x-0  mr-8 whitespace-nowrap overflow-x-scroll"
     >
       <ImageThumbnail
         v-for="(thumbnail, index) in images"

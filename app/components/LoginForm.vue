@@ -39,7 +39,7 @@ async function login() {
       type="password"
       placeholder="Inserisci la password"
       icon="i-heroicons-key"
-      class="!w-60"
+      class="w-60!"
     />
 
     <UButton

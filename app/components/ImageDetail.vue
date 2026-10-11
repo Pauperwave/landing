@@ -56,16 +56,16 @@ onMounted(() => {
 <template>
   <div v-if="image">
     <!-- background -->
-    <div class="absolute inset-0 w-full h-full">
+    <div class="absolute inset-0 size-full ">
       <img
         :src="`/images/${image.pathname}`"
-        class="object-cover w-full h-full blur-[70px] brightness-[.2] will-change-[filter]"
+        class="object-cover size-full  blur-[70px] brightness-[.2] will-change-[filter]"
         alt=""
       >
     </div>
 
     <UContainer class="overflow-x-hidden relative flex items-center justify-center">
-      <div class="h-full w-full max-w-7xl flex items-center justify-center relative mx-auto">
+      <div class="size-full  max-w-7xl flex items-center justify-center relative mx-auto">
         <!-- Bottom menu -->
         <BottomMenu
           ref="bottomMenu"
@@ -164,7 +164,7 @@ onMounted(() => {
                 >
                   <UIcon
                     name="i-heroicons-rectangle-group-20-solid"
-                    class="w-6 h-6"
+                    class="size-6 "
                   />
                 </UButton>
               </UTooltip>
@@ -219,7 +219,7 @@ onMounted(() => {
                 >
                   <UIcon
                     name="i-heroicons-rectangle-group-20-solid"
-                    class="w-6 h-6"
+                    class="size-6 "
                   />
                 </UButton>
               </div>
