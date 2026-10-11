@@ -31,21 +31,12 @@ await getImages()
 
 <template>
   <UApp
-    class="bg-black min-h-[100dvh] overflow-x-auto relative"
+    class="bg-black min-h-dvh overflow-x-auto relative"
     :class="{ 'flex flex-col md:block': isPhotoDetail }"
   >
     <NuxtPage />
     <ImageThumbnailList
-      :class="isPhotoDetail ? 'opacity-100 z-[9999]' : 'opacity-0 z-[-1]'"
+      :class="isPhotoDetail ? 'opacity-100 z-9999' : 'opacity-0 z-[-1]'"
     />
   </UApp>
 </template>
-
-<style>
-@import "tailwindcss";
-@import "@nuxt/ui";
-
-@theme {
-  --font-family-sans: 'Inter', sans-serif;
-}
-</style>

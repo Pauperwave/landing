@@ -10,6 +10,8 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
 
+  css: ['~/assets/css/main.css'],
+
   site: {
     url: 'https://pauperwave.org/',
     name: 'Pauperwave',
