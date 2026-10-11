@@ -22,17 +22,21 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
+// The gallery shell (thumbnails strip, stacked layout) belongs to the photo detail pages only
+const route = useRoute()
+const isPhotoDetail = computed(() => route.path.startsWith('/detail'))
+
 await getImages()
 </script>
 
 <template>
   <UApp
     class="bg-black min-h-[100dvh] overflow-x-auto relative"
-    :class="{ 'flex flex-col md:block': $router.currentRoute.value.fullPath !== '/' }"
+    :class="{ 'flex flex-col md:block': isPhotoDetail }"
   >
     <NuxtPage />
     <ImageThumbnailList
-      :class="$router.currentRoute.value.fullPath !== '/' ? 'opacity-100 z-[9999]' : 'opacity-0 z-[-1]'"
+      :class="isPhotoDetail ? 'opacity-100 z-[9999]' : 'opacity-0 z-[-1]'"
     />
   </UApp>
 </template>
