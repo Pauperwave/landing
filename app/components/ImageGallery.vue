@@ -184,8 +184,7 @@ async function clearSession() {
       class="flex items-center space-x-4 z-10"
     >
       <USkeleton
-        class="h-12 w-12 bg-white-500"
-        :ui="{ rounded: 'rounded-full' }"
+        class="h-12 w-12 rounded-full bg-white-500"
       />
       <div class="space-y-2">
         <USkeleton class="h-4 w-[250px] bg-white-500" />
