@@ -3,6 +3,7 @@ import type { BlobObject } from '@nuxthub/core/blob'
 
 const route = useRoute()
 const { images } = useFile()
+const origin = useRequestURL().origin
 
 // Get the current image based on the slug
 const image = computed(() => {
@@ -10,24 +11,15 @@ const image = computed(() => {
   return images.value.find((file: BlobObject) => file.pathname.split('.')[0] === route.params.slug![0])
 })
 
-// SEO Meta tags for individual images
-watchEffect(() => {
-  if (image.value && image.value.pathname) {
-    const imageName = ((image.value?.pathname ?? '').split('.')[0] ?? '').replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())
-    const imageUrl = `${useRequestURL().origin}/images/${image.value.pathname}`
+const imageName = computed(() => image.value?.pathname.split('.')[0]?.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()))
+const imageUrl = computed(() => image.value ? `${origin}/images/${image.value.pathname}` : undefined)
 
-    useSeoMeta({
-      title: `${imageName} - Pauperwave`,
-      description: `Foto degli eventi Pauperwave: ${imageName}.`,
-      ogTitle: `${imageName} - Pauperwave`,
-      ogDescription: `Foto degli eventi Pauperwave: ${imageName}.`,
-      ogImage: imageUrl,
-      ogImageAlt: imageName,
-      twitterCard: 'summary_large_image',
-      twitterImage: imageUrl,
-      twitterImageAlt: imageName
-    })
-  }
+// SEO meta tags for individual images
+useSeoHead({
+  title: () => imageName.value ? `${imageName.value} - Pauperwave` : undefined,
+  description: () => imageName.value ? `Foto degli eventi Pauperwave: ${imageName.value}.` : undefined,
+  image: imageUrl,
+  imageAlt: imageName
 })
 </script>
 

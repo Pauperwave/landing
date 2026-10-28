@@ -1,9 +1,7 @@
 <script setup lang="ts">
-useSeoMeta({
+useSeoHead({
   title: 'Siti Pauperwave',
-  description: 'Tutti i siti e gli strumenti dell\'associazione Pauperwave.',
-  ogTitle: 'Siti Pauperwave',
-  ogDescription: 'Tutti i siti e gli strumenti dell\'associazione Pauperwave.'
+  description: 'Tutti i siti e gli strumenti dell\'associazione Pauperwave.'
 })
 
 interface Site {

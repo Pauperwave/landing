@@ -1,12 +1,7 @@
 <script setup lang="ts">
-// Enhanced SEO for homepage
-useSeoMeta({
+useSeoHead({
   title: 'Pauperwave - Galleria eventi',
-  description: 'Le foto degli eventi organizzati dall\'associazione Pauperwave.',
-  ogTitle: 'Pauperwave - Galleria eventi',
-  ogDescription: 'Le foto degli eventi organizzati dall\'associazione Pauperwave.',
-  twitterTitle: 'Pauperwave - Galleria eventi',
-  twitterDescription: 'Le foto degli eventi organizzati dall\'associazione Pauperwave.'
+  description: 'Le foto degli eventi organizzati dall\'associazione Pauperwave.'
 })
 </script>
 
