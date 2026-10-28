@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   site: {
-    url: 'https://pauperwave.org/',
+    url: 'https://photos.pauperwave.org/',
     name: 'Pauperwave',
     description: 'Foto ed eventi dell\'associazione Pauperwave',
     defaultLocale: 'it',
