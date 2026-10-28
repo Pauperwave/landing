@@ -90,7 +90,7 @@ onMounted(() => {
                     color="gray"
                     to="/"
                     size="md"
-                    icon="i-heroicons-rectangle-group-20-solid"
+                    :icon="ICONS.gallery"
                     aria-label="Back to gallery"
                     class="back flex transition-colors duration-200"
                   />
@@ -100,7 +100,7 @@ onMounted(() => {
                   <UButton
                     variant="ghost"
                     color="gray"
-                    icon="i-heroicons-arrow-up-right-20-solid"
+                    :icon="ICONS.externalLink"
                     size="md"
                     :to="`/images/${image.pathname}`"
                     target="_blank"
@@ -112,7 +112,7 @@ onMounted(() => {
                   <UButton
                     variant="ghost"
                     color="gray"
-                    icon="i-heroicons-arrow-down-tray-20-solid"
+                    :icon="ICONS.download"
                     size="md"
                     class="hidden md:flex"
                     aria-label="Download image"
@@ -137,7 +137,7 @@ onMounted(() => {
                 color="gray"
                 :to="images && images[currentIndex - 1] ? `/detail/${images[currentIndex - 1]?.pathname.split('.')[0]}` : '/'"
                 size="lg"
-                icon="i-heroicons-chevron-left"
+                :icon="ICONS.previous"
                 class="hidden md:flex ml-4"
                 aria-label="Go to previous image"
                 @click="() => { active === image.pathname.split('.')[0] }"
@@ -163,7 +163,7 @@ onMounted(() => {
                   @click="() => { active === image.pathname.split('.')[0] }"
                 >
                   <UIcon
-                    name="i-heroicons-rectangle-group-20-solid"
+                    :name="ICONS.gallery"
                     class="size-6 "
                   />
                 </UButton>
@@ -194,7 +194,7 @@ onMounted(() => {
                 color="gray"
                 :to="images && images[currentIndex + 1]?.pathname ? `/detail/${images[currentIndex + 1]?.pathname.split('.')[0]}` : '/'"
                 size="lg"
-                icon="i-heroicons-chevron-right"
+                :icon="ICONS.next"
                 class="hidden md:flex mr-4 rounded-full"
                 aria-label="Go to next image"
                 @click="() => { active === image.pathname.split('.')[0] }"
@@ -218,7 +218,7 @@ onMounted(() => {
                   @click="() => { active === image.pathname.split('.')[0] }"
                 >
                   <UIcon
-                    name="i-heroicons-rectangle-group-20-solid"
+                    :name="ICONS.gallery"
                     class="size-6 "
                   />
                 </UButton>

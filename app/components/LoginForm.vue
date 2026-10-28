@@ -38,7 +38,7 @@ async function login() {
       v-model="password"
       type="password"
       placeholder="Inserisci la password"
-      icon="i-heroicons-key"
+      :icon="ICONS.key"
       class="w-60!"
     />
 

@@ -55,6 +55,13 @@ export default defineNuxtConfig({
     }
   },
 
+  // The scan also reads .ts files, since the icon names are listed in app/utils/icons.ts
+  icon: {
+    clientBundle: {
+      scan: { globInclude: ['**/*.{vue,jsx,tsx,md,mdc,mdx,yml,yaml,ts}'] }
+    }
+  },
+
   seo: {
     redirectToCanonicalSiteUrl: true
   }

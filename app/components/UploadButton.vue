@@ -29,14 +29,14 @@ const isSmallScreen = useMediaQuery('(max-width: 1024px)')
           class="w-full rounded-md flex items-center justify-center h-107.5"
         >
           <UIcon
-            name="i-heroicons-arrow-up-tray"
+            :name="ICONS.upload"
             class="group-hover:hidden size-12  m-auto absolute"
           />
           <div
             class="relative opacity-0 group-hover:opacity-100 flex size-full  justify-center items-center transition-all duration-100"
           >
             <UIcon
-              name="i-heroicons-arrow-up-tray"
+              :name="ICONS.upload"
               class="absolute m-auto size-12  transition-all duration-100 group-hover:-translate-y-5"
             />
             <span
@@ -51,7 +51,7 @@ const isSmallScreen = useMediaQuery('(max-width: 1024px)')
         >
           <div class="relative flex flex-col size-full  justify-center items-center ">
             <UIcon
-              name="i-heroicons-arrow-up-tray"
+              :name="ICONS.upload"
               class="size-12  text-white"
             />
             <span class="text-white">Press to upload</span>
@@ -60,7 +60,7 @@ const isSmallScreen = useMediaQuery('(max-width: 1024px)')
       </div>
       <div v-else>
         <UIcon
-          name="i-heroicons-arrow-path-20-solid"
+          :name="ICONS.spinner"
           class="animate-spin size-12  text-white"
         />
       </div>

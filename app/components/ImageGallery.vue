@@ -82,7 +82,7 @@ async function clearSession() {
             <UButton
               v-if="loggedIn"
               :loading="disconnect"
-              icon="i-heroicons-power-20-solid"
+              :icon="ICONS.signOut"
               color="red"
               variant="ghost"
               @click="clearSession"
@@ -158,7 +158,7 @@ async function clearSession() {
               v-if="loggedIn"
               :loading="deletingImg === image.pathname"
               color="gray"
-              icon="i-heroicons-trash-20-solid"
+              :icon="ICONS.trash"
               class="absolute top-4 right-4 z-9999 opacity-0 group-hover:opacity-100"
               @click="deleteFile(image.pathname)"
             />
