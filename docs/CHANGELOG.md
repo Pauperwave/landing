@@ -2,6 +2,7 @@
 
 Trail grezzo commit-by-commit, più recente in cima. Per il "perché" dietro le decisioni vedi [PROGRESS.md](PROGRESS.md).
 
+- `99f8143` — Imposta photos.pauperwave.org come indirizzo canonico del sito
 - `8b5fdbe` — Scrivi le classi Tailwind in forma canonica (size-12 al posto di h-12 w-12)
 - `6a49551` — Aggiungi la regola enforce-canonical-classes di better-tailwindcss
 - `f6e13fc` — Sposta gli import di Tailwind e Nuxt UI in assets/css/main.css

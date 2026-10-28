@@ -31,7 +31,7 @@ Landing page e galleria foto degli eventi dell'associazione [Pauperwave](https:/
 
 - `NUXT_ADMIN_PASSWORD` - password per accedere al pannello admin e caricare le foto (default `admin` se non impostata, da cambiare in produzione)
 - `NUXT_SESSION_PASSWORD` - chiave per la cifratura della sessione, generata automaticamente in dev se non presente
-- `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_BUCKET`, `S3_REGION` (`auto` per R2), `S3_ENDPOINT` (`https://<account id>.r2.cloudflarestorage.com`) - bucket R2 delle foto. Vanno impostate **già alla build** (su Vercel valgono per Build e Runtime): è la loro presenza a far scegliere il driver S3; senza, in produzione il modulo userebbe Vercel Blob. In sviluppo i file stanno in `.data`
+- `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_BUCKET`, `S3_REGION` (`auto` per R2), `S3_ENDPOINT` (`https://<account id>.r2.cloudflarestorage.com`, con `.eu.` dopo l'id se il bucket è nella giurisdizione EU, come quello in produzione) - bucket R2 delle foto. Vanno impostate **già alla build** (su Vercel valgono per Build e Runtime): è la loro presenza a far scegliere il driver S3; senza, in produzione il modulo userebbe Vercel Blob. In sviluppo i file stanno in `.data`
 
 ## Sviluppo
 

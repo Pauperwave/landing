@@ -2,6 +2,22 @@
 
 Documento vivo: decisioni prese e perché, in ordine cronologico. Per il changelog grezzo vedi [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-10-28 — Primo deploy su Vercel, su photos.pauperwave.org
+
+**Decisione:** un problema alla volta. Il sito parte su un sottodominio, `photos.pauperwave.org`, che si aggiunge al progetto Vercel senza toccare il DNS (già su Vercel). L'apex `pauperwave.org` resta da decidere. Il sito resta su Vercel; Cloudflare serve solo per R2.
+
+**Cosa è stato configurato** (progetto Vercel `landing`, ambiente Production; i valori non stanno nel repository):
+- Bucket R2 `pauperwave-photos` nella **giurisdizione EU**: per questo `S3_ENDPOINT` ha la forma `https://<account id>.eu.r2.cloudflarestorage.com`, con `.eu.`.
+- `S3_ACCESS_KEY_ID` e `S3_SECRET_ACCESS_KEY`: Access Key ID e Secret Access Key di un token API *Account* di R2 con permesso **Object Read & Write**, limitato al solo bucket. Si creano dalla pagina R2 (*API Tokens → Manage*), non da *My Profile*, e il segreto compare una sola volta.
+- `S3_ENDPOINT`, `S3_BUCKET` (`pauperwave-photos`), `S3_REGION` (`auto`).
+- `NUXT_SESSION_PASSWORD`: stringa casuale generata per l'occasione, salvata come variabile sensibile; nessuno la conosce, non serve digitarla.
+- `NUXT_ADMIN_PASSWORD`: scelta dal proprietario del sito. Se manca, il sito usa `admin`.
+- `site.url` in `nuxt.config.ts` passa da `https://pauperwave.org/` a `https://photos.pauperwave.org/`: con `redirectToCanonicalSiteUrl` attivo, altrimenti ogni visita al sottodominio veniva rimandata all'apex (che risponde 404).
+
+**Cosa è andato storto:** il primo deploy è stato costruito senza le variabili `S3_*`, quindi NuxtHub ha scelto il driver Vercel Blob, il cui pacchetto (`@vercel/blob`) non è installato: `/api/images` rispondeva 500. Le variabili devono esserci **alla build**; dopo averle aggiunte serve un nuovo deploy.
+
+**Esito:** dopo il secondo deploy il sito risponde 200 senza reindirizzamenti e `/api/images` restituisce una lista vuota, quindi la connessione S3 al bucket funziona. Il caricamento di una foto come admin e la sua rilettura non sono ancora stati provati.
+
 ## 2026-10-11 — Hosting su Vercel, foto su R2
 
 **Contesto:** il dominio `pauperwave.org` ha i nameserver di Vercel (`ns1/ns2.vercel-dns.com`) e l'apex risponde `DEPLOYMENT_NOT_FOUND`. La landing era pensata per NuxtHub su Cloudflare, ma non è mai stata pubblicata. Cloudflare Pages vuole i nameserver di Cloudflare per un dominio apex, e spostarli avrebbe toccato anche blog e app, che stanno su Vercel.
