@@ -1,12 +1,9 @@
 <script setup lang="ts">
-const isOpen = ref(false)
 const isUploadModalOpen = ref(false)
 const isDeleteModalOpen = ref(false)
 const isDeletingSelection = ref(false)
 
 const dropZoneRef = ref<HTMLElement>()
-const fileInput = ref<HTMLInputElement>()
-const mansoryItem = ref<Array<HTMLElement>>([])
 const deletingImg = ref('')
 const disconnect = ref(false)
 
@@ -28,10 +25,6 @@ const active = useState()
 
 const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 
-function openFilePicker() {
-  fileInput.value?.click()
-}
-
 function queuePhotos(files: File[]) {
   // Only the admin uploads; a visitor dropping files on the page gets nothing
   if (!loggedIn.value) {
@@ -43,14 +36,6 @@ function queuePhotos(files: File[]) {
   if (queuedPhotos.value.length > 0) {
     isUploadModalOpen.value = true
   }
-}
-
-function fileSelection(event: Event) {
-  const target = event.target as HTMLInputElement
-
-  queuePhotos(Array.from(target.files ?? []))
-  // Lets the admin pick the same files again
-  target.value = ''
 }
 
 function onDrop(files: File[] | null) {
@@ -77,6 +62,10 @@ async function deleteSelection() {
     })
     .catch(() => toast.add({ title: t('gallery.errorTitle'), description: t('gallery.errorDescription'), color: 'red' }))
     .finally(() => isDeletingSelection.value = false)
+}
+
+function isActive(pathname: string): boolean {
+  return pathname.split('.')[0] === active.value
 }
 
 // In selection mode a click ticks the photo instead of opening it
@@ -112,84 +101,27 @@ async function clearSession() {
         @cancel="stopSelecting"
         @delete="isDeleteModalOpen = true"
       />
-      <BottomMenu
+      <ImageToolbar
         v-else
-        class="bottom-menu"
-      >
-        <template #logo>
-          <img
-            src="/logo.svg"
-            alt=""
-            width="29"
-            height="20"
-          >
-        </template>
-        <template #description>
-          <p class="bottom-menu-description text-sm/tight sm:text-base/normal  ">
-            {{ t('home.menuTitle') }}
-          </p>
-        </template>
-        <template #buttons>
-          <div class="flex gap-x-2">
-            <UButton
-              v-if="loggedIn && images.length"
-              :icon="ICONS.select"
-              color="neutral"
-              variant="ghost"
-              :aria-label="t('selection.start')"
-              @click="startSelecting"
-            />
-            <UButton
-              v-if="loggedIn"
-              :loading="disconnect"
-              :icon="ICONS.signOut"
-              color="red"
-              variant="ghost"
-              @click="clearSession"
-            />
-            <UModal
-              v-model:open="isOpen"
-              :title="t('login.title')"
-              :close="{
-                color: 'gray',
-                variant: 'outline',
-                class: 'rounded-full'
-              }"
-            >
-              <UButton
-                v-if="!loggedIn"
-                :label="t('login.action')"
-                color="primary"
-                variant="ghost"
-                :aria-label="t('login.action')"
-                class="mr-4 sm:mr-0"
-              />
-              <template #body>
-                <LoginForm @close="isOpen = false" />
-              </template>
-            </UModal>
-          </div>
-        </template>
-      </BottomMenu>
+        :logged-in="loggedIn"
+        :has-images="images.length > 0"
+        :is-signing-out="disconnect"
+        @start-selecting="startSelecting"
+        @sign-out="clearSession"
+      />
 
       <div
         class="w-full"
         :class="{ 'masonry-container': images && images.length }"
       >
-        <div v-if="loggedIn">
-          <input
-            ref="fileInput"
-            class="hidden"
-            type="file"
-            accept="image/*"
-            multiple
-            @change="fileSelection"
-          >
-          <UploadModal
+        <template v-if="loggedIn">
+          <ImageUploadPanel
             v-model:open="isUploadModalOpen"
-            :photos="queuedPhotos"
-            :phase="uploadPhase"
-            :ready-count="readyPhotoCount"
+            :queued-photos="queuedPhotos"
+            :upload-phase="uploadPhase"
+            :ready-photo-count="readyPhotoCount"
+            :is-over-drop-zone="isOverDropZone"
+            @files="queuePhotos"
             @remove="removePhoto"
             @confirm="uploadReadyPhotos"
             @closed="resetUploadQueue"
@@ -200,13 +132,7 @@ async function clearSession() {
             :is-deleting="isDeletingSelection"
             @confirm="deleteSelection"
           />
-          <UploadButton
-            type="submit"
-            class="mb-6"
-            :is-over-drop-zone="isOverDropZone"
-            @click="openFilePicker"
-          />
-        </div>
+        </template>
         <div
           v-else
           class="text-2xl text-white flex flex-col gap-y-4 items-center justify-center size-full  pb-8"
@@ -219,47 +145,18 @@ async function clearSession() {
           </p>
         </div>
 
-        <ul
+        <ImagePhotoGrid
           v-if="images && images.length"
-          class="grid grid-cols-1 gap-4 lg:block"
-        >
-          <li
-            v-for="image in images"
-            ref="mansoryItem"
-            :key="image.pathname"
-            class="relative w-full group masonry-item"
-          >
-            <UCheckbox
-              v-if="isSelecting"
-              :model-value="isSelected(image.pathname)"
-              :aria-label="t('selection.photoCheckbox')"
-              class="absolute top-4 left-4 z-9999"
-              @update:model-value="toggle(image.pathname)"
-            />
-            <UButton
-              v-if="loggedIn && !isSelecting"
-              :loading="deletingImg === image.pathname"
-              color="gray"
-              :icon="ICONS.trash"
-              class="absolute top-4 right-4 z-9999 opacity-0 group-hover:opacity-100"
-              @click="deleteFile(image.pathname)"
-            />
-            <NuxtLink
-              :to="`/detail/${image.pathname.split('.')[0]}`"
-              @click="openOrSelect($event, image.pathname)"
-            >
-              <img
-                v-if="image"
-                width="527"
-                height="430"
-                :src="`/images/${image.pathname}`"
-                :alt="t('photo.alt')"
-                :class="{ 'imageEl': image.pathname.split('.')[0] === active, 'ring-2 ring-primary': isSelected(image.pathname) }"
-                class="h-auto w-full max-h-107.5 rounded-md transition-all duration-200 border-image brightness-[.8] hover:brightness-100 will-change-[filter] object-cover"
-              >
-            </NuxtLink>
-          </li>
-        </ul>
+          :images="images"
+          :logged-in="loggedIn"
+          :is-selecting="isSelecting"
+          :is-selected="isSelected"
+          :is-active="isActive"
+          :deleting-pathname="deletingImg"
+          @open="openOrSelect"
+          @toggle="toggle"
+          @delete="deleteFile"
+        />
       </div>
     </section>
     <div
@@ -278,33 +175,6 @@ async function clearSession() {
 </template>
 
 <style scoped>
-@media (min-width: 768px) {
-  .imageEl {
-    view-transition-name: vtn-image;
-  }
-
-  .bottom-menu-description {
-    view-transition-name: vtn-bottom-menu-description;
-  }
-
-  .bottom-menu-button {
-    view-transition-name: vtn-bottom-menu-button;
-  }
-
-  .container-image {
-    background-color: rgba(255, 255, 255, 0.1)
-  }
-
-  .container-image:hover {
-    background-color: transparent;
-  }
-
-  .border-image {
-    border-width: 1.15px;
-    border-color: rgba(255, 255, 255, 0.1)
-  }
-}
-
 @media screen and (min-width: 1024px) {
   .masonry-container {
     column-count: 3;
@@ -312,16 +182,6 @@ async function clearSession() {
     column-fill: balance;
     margin: 20px auto 0;
     padding: 2rem;
-  }
-
-  .masonry-item,
-  .upload {
-    display: inline-block;
-    margin: 0 0 20px;
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    width: 100%;
   }
 }
 </style>

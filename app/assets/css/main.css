@@ -3,4 +3,5 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
+  --color-image-border: color-mix(in srgb, white 10%, transparent);
 }
