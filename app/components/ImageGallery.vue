@@ -1,16 +1,20 @@
 <script setup lang="ts">
 const isOpen = ref(false)
+const isUploadModalOpen = ref(false)
 
 const dropZoneRef = ref<HTMLElement>()
 const fileInput = ref<HTMLInputElement>()
 const mansoryItem = ref<Array<HTMLElement>>([])
 const deletingImg = ref('')
-const uploadingImg = ref(false)
 const disconnect = ref(false)
 
 const toast = useToast()
-const { uploadImage, deleteImage, images } = useFile()
+const { deleteImage, images } = useFile()
 const { loggedIn, clear } = useUserSession()
+const {
+  photos: queuedPhotos, phase: uploadPhase, readyCount: readyPhotoCount,
+  addFiles, uploadReadyPhotos, removePhoto, reset: resetUploadQueue
+} = useUploadQueue()
 
 const active = useState()
 
@@ -20,26 +24,31 @@ function openFilePicker() {
   fileInput.value?.click()
 }
 
-async function fileSelection(event: Event) {
+function queuePhotos(files: File[]) {
+  // Only the admin uploads; a visitor dropping files on the page gets nothing
+  if (!loggedIn.value) {
+    return
+  }
+
+  addFiles(files)
+
+  if (queuedPhotos.value.length > 0) {
+    isUploadModalOpen.value = true
+  }
+}
+
+function fileSelection(event: Event) {
   const target = event.target as HTMLInputElement
 
-  if (target.files?.[0]) {
-    await uploadFile(target.files[0])
-  }
+  queuePhotos(Array.from(target.files ?? []))
+  // Lets the admin pick the same files again
+  target.value = ''
 }
 
-async function onDrop(files: File[] | null) {
+function onDrop(files: File[] | null) {
   if (files) {
-    await uploadFile(files[0] as File)
+    queuePhotos(files)
   }
-}
-
-async function uploadFile(file: File) {
-  uploadingImg.value = true
-
-  await uploadImage(file)
-    .catch(() => toast.add({ title: 'An error occured', description: 'Please try again', color: 'red' }))
-    .finally(() => uploadingImg.value = false)
 }
 
 async function deleteFile(pathname: string) {
@@ -122,10 +131,19 @@ async function clearSession() {
             class="hidden"
             type="file"
             accept="image/*"
+            multiple
             @change="fileSelection"
           >
+          <UploadModal
+            v-model:open="isUploadModalOpen"
+            :photos="queuedPhotos"
+            :phase="uploadPhase"
+            :ready-count="readyPhotoCount"
+            @remove="removePhoto"
+            @confirm="uploadReadyPhotos"
+            @closed="resetUploadQueue"
+          />
           <UploadButton
-            :uploading="uploadingImg"
             type="submit"
             class="mb-6"
             :is-over-drop-zone="isOverDropZone"

@@ -1,4 +1,5 @@
 // Vercel rejects request bodies above 4.5 MB before the server runs, so photos are shrunk in the browser first
+export const MAX_UPLOAD_SIZE_IN_BYTES = 4 * 1024 * 1024
 const MAX_SIDE_IN_PIXELS = 2560
 const ENCODING_QUALITY = 0.85
 

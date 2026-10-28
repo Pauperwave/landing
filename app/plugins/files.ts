@@ -2,9 +2,8 @@ import type { FilePlugin } from '../../types'
 
 export default defineNuxtPlugin(() => {
   const images = ref()
-  const router = useRouter()
-  const toast = useToast()
   // https://hub.nuxt.com/docs/blob/upload
+  // One photo per request: NuxtHub puts every file of a request in one body, and Vercel caps a body at 4.5 MB
   const upload = useUpload('/api/images/upload', { multiple: false })
 
   async function getImages() {
@@ -13,18 +12,10 @@ export default defineNuxtPlugin(() => {
     images.value = file
   }
 
-  async function uploadImage(image: File, filter: boolean = false) {
-    await upload(await prepareImageForUpload(image)).catch(err => toast.add({
-      color: 'red',
-      title: 'Failed to upload image',
-      description: err.data?.message || err.message
-    }))
+  async function uploadImage(image: File) {
+    await upload(image)
 
     getImages()
-
-    if (filter) {
-      router.push('/')
-    }
   }
 
   async function deleteImage(pathname: string) {
