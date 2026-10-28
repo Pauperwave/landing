@@ -49,9 +49,5 @@ const sites: Site[] = [
         </ULink>
       </li>
     </ul>
-
-    <footer class="mt-8 text-xs text-dimmed">
-      <VersionBadge />
-    </footer>
   </main>
 </template>

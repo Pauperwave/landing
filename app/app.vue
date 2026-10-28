@@ -38,5 +38,11 @@ await getImages()
     <ImageThumbnailList
       :class="isPhotoDetail ? 'opacity-100 z-9999' : 'opacity-0 z-[-1]'"
     />
+    <footer
+      v-if="!isPhotoDetail"
+      class="absolute right-3 bottom-1 text-xs text-dimmed"
+    >
+      <VersionBadge />
+    </footer>
   </UApp>
 </template>
