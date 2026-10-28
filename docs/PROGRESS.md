@@ -18,6 +18,23 @@ Documento vivo: decisioni prese e perché, in ordine cronologico. Per il changel
 
 **Esito:** dopo il secondo deploy il sito risponde 200 senza reindirizzamenti e `/api/images` restituisce una lista vuota, quindi la connessione S3 al bucket funziona. Il caricamento di una foto come admin e la sua rilettura non sono ancora stati provati.
 
+## 2026-10-28 — Caricamento di più foto con una modale di anteprima
+
+**Richiesta:** poter scegliere o rilasciare più foto insieme, vederne l'anteprima ridotta e caricarle in serie, invece di una alla volta.
+
+**Come funziona:**
+- Il selettore file accetta più file (`multiple`) e la zona di rilascio li prende tutti. Solo l'admin autenticato mette in coda le foto.
+- Si apre `UploadModal` (Nuxt UI `UModal`). Le foto vengono ridotte una alla volta (`prepareImageForUpload`), e ogni riga mostra miniatura, peso originale → peso ridotto con la percentuale risparmiata, e lo stato.
+- Il caricamento parte solo con il pulsante "Carica N foto": prima di allora si può togliere una foto dall'elenco. Una foto ancora sopra i 4 MiB dopo la riduzione è segnata come errore e non viene inviata.
+- Il caricamento è **una richiesta per foto**, in serie. Il flag `multiple` di NuxtHub resta `false` (client e server): con `true`, `useUpload` metterebbe tutti i file nello stesso corpo, e Vercel lo rifiuta oltre 4,5 MB.
+- Se una foto fallisce, le altre continuano e la sua riga mostra l'errore.
+
+**Componenti** (`app/components/upload/`, nome = cartella + file): `Modal`, `List`, `Item`, `Thumbnail`, `Savings`, `Status`, `Actions`. La logica sta in `app/composables/useUploadQueue.ts`; il formato dei pesi e la percentuale in `app/utils/fileSize.ts`, con test.
+
+**Icone:** da Heroicons a Lucide (`@iconify-json/lucide`). Tutti i nomi sono in `app/utils/icons.ts` (`ICONS`), scritti per intero; `nuxt.config.ts` fa leggere anche i file `.ts` alla scansione di Nuxt Icon, altrimenti non finirebbero nel pacchetto client.
+
+**Non verificato:** il comportamento nel browser (anteprime, riduzione, caricamento in serie) non ha test automatici; va provato con il sito online.
+
 ## 2026-10-28 — Foto ridotte nel browser (limite di 4,5 MB di Vercel)
 
 **Problema:** molte foto caricate dal pannello admin davano `413`. Il browser invia il file con un'unica richiesta `POST /api/images/upload` a una Vercel Function, e Vercel respinge i corpi oltre **4,5 MB** (`FUNCTION_PAYLOAD_TOO_LARGE`, documentazione *Vercel Functions Limits*) prima di avviare la funzione. Il limite di 8 MB in `upload.post.ts` non conta, perché il rifiuto avviene prima.
