@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { encodeImageSlug, isImageMatch } from '../utils/url.ts'
+import { encodeImageSlug, isImageMatch } from '~/utils/url'
 
 defineProps({
   thumbnail: {

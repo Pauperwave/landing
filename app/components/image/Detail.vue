@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { BlobObject } from '@nuxthub/core/blob'
-import { decodeImageSlug } from '../utils/url.ts'
+import { decodeImageSlug } from '~/utils/url'
 
 const bottomMenu = ref<HTMLElement>()
 const imageEl = ref<HTMLImageElement>()

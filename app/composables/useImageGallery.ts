@@ -1,7 +1,7 @@
 import type { UseSwipeDirection } from '@vueuse/core'
 import type { BlobObject } from '@nuxthub/core/blob'
 import type { FilePlugin } from '../../types'
-import { encodeImageSlug, decodeImageSlug, isImageMatch } from '../utils/url.ts'
+import { encodeImageSlug, decodeImageSlug, isImageMatch } from '~/utils/url'
 
 export function useImageGallery() {
   const nuxtApp = useNuxtApp()
