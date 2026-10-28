@@ -119,6 +119,7 @@ async function clearSession() {
         <template #logo>
           <img
             src="/logo.svg"
+            alt=""
             width="29"
             height="20"
           >
@@ -252,6 +253,7 @@ async function clearSession() {
                 width="527"
                 height="430"
                 :src="`/images/${image.pathname}`"
+                :alt="t('photo.alt')"
                 :class="{ 'imageEl': image.pathname.split('.')[0] === active, 'ring-2 ring-primary': isSelected(image.pathname) }"
                 class="h-auto w-full max-h-107.5 rounded-md transition-all duration-200 border-image brightness-[.8] hover:brightness-100 will-change-[filter] object-cover"
               >
