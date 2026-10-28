@@ -2,15 +2,21 @@
 
 Trail grezzo commit-by-commit, più recente in cima. Per il "perché" dietro le decisioni vedi [PROGRESS.md](PROGRESS.md).
 
-- `784a259` — Riduci le foto nel browser prima del caricamento: Vercel rifiuta i corpi oltre 4,5 MB
-- `7d74b3c` — Documenta le variabili d'ambiente di produzione e il primo deploy su photos.pauperwave.org
-- `99f8143` — Imposta photos.pauperwave.org come indirizzo canonico del sito
-- `8b5fdbe` — Scrivi le classi Tailwind in forma canonica (size-12 al posto di h-12 w-12)
-- `6a49551` — Aggiungi la regola enforce-canonical-classes di better-tailwindcss
-- `f6e13fc` — Sposta gli import di Tailwind e Nuxt UI in assets/css/main.css
-- `a5b8887` — Adegua il codice a Nuxt UI 4: niente keywords in useSeoMeta, il raggio di USkeleton passa dalla classe
-- `82d1c5a` — Aggiorna le dipendenze: Nuxt 4.6, Nuxt UI 4, ESLint 10, Vitest 5 (TypeScript resta alla 5.8)
-- `3666c26` — Passa a NuxtHub 0.10 e prepara il deploy su Vercel con le foto su R2 (driver S3)
-- `6642bdb` — Aggiungi la pagina /siti con l'elenco dei sottodomini di Pauperwave
-- `82bb682` — Fix: errore di typecheck sul DELETE delle immagini (pathname può essere assente)
-- `caa701b` — first commit (repo inizializzato, vuoto)
+- `67a564f` — chore(tooling): 🔧 enforce the commit message format with a commit-msg hook
+- `640047d` — docs(upload): 📝 document the in-browser photo shrinking and Vercel's 4.5 MB limit
+- `096ae84` — feat(upload): ✨ shrink photos in the browser before uploading
+- `beb959c` — docs(deploy): 📝 document the production environment variables and the first deploy on photos.pauperwave.org
+- `42ef654` — chore(seo): 🔧 set photos.pauperwave.org as the canonical address of the site
+- `c805401` — docs(changelog): 📝 update the changelog
+- `12a6a08` — style(tailwind): 🎨 write Tailwind classes in canonical form (size-12 instead of h-12 w-12)
+- `2083f6b` — chore(lint): 🚨 add the better-tailwindcss enforce-canonical-classes rule
+- `2d2ea95` — refactor(styles): ♻️ move the Tailwind and Nuxt UI imports into assets/css/main.css
+- `dda2035` — refactor(ui): ♻️ adapt the code to Nuxt UI 4: no keywords in useSeoMeta, the USkeleton radius comes from the class
+- `d4d9503` — build(deps): ⬆️ update dependencies: Nuxt 4.6, Nuxt UI 4, ESLint 10, Vitest 5 (TypeScript stays on 5.8)
+- `e5ea232` — docs(changelog): 📝 update the changelog
+- `7435dbc` — build(deploy): 🚀 switch to NuxtHub 0.10 and prepare the Vercel deploy with photos on R2 (S3 driver)
+- `54661b1` — docs(changelog): 📝 update the changelog
+- `93a8b10` — feat(sites): ✨ add the /siti page listing the Pauperwave subdomains
+- `0d2c2ef` — fix(images): 🐛 fix the typecheck error when deleting an image (the pathname can be missing)
+- `90b2a48` — feat: 🎉 bootstrap the landing from the nuxt-image-gallery template
+- `3ea249e` — chore: 🎉 initial commit
