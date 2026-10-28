@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const isOpen = ref(false)
 const isUploadModalOpen = ref(false)
+const isDeleteModalOpen = ref(false)
+const isDeletingSelection = ref(false)
 
 const dropZoneRef = ref<HTMLElement>()
 const fileInput = ref<HTMLInputElement>()
@@ -10,12 +12,17 @@ const disconnect = ref(false)
 
 const { t } = useI18n()
 const toast = useToast()
-const { deleteImage, images } = useFile()
+const { deleteImage, deleteImages, images } = useFile()
 const { loggedIn, clear } = useUserSession()
 const {
   photos: queuedPhotos, phase: uploadPhase, readyCount: readyPhotoCount,
   addFiles, uploadReadyPhotos, removePhoto, reset: resetUploadQueue
 } = useUploadQueue()
+
+const {
+  isSelecting, selectedPathnames, selectedCount,
+  startSelecting, stopSelecting, isSelected, toggle, toggleAll
+} = useImageSelection()
 
 const active = useState()
 
@@ -60,6 +67,30 @@ async function deleteFile(pathname: string) {
     .finally(() => deletingImg.value = '')
 }
 
+async function deleteSelection() {
+  isDeletingSelection.value = true
+
+  await deleteImages(selectedPathnames.value)
+    .then(() => {
+      isDeleteModalOpen.value = false
+      stopSelecting()
+    })
+    .catch(() => toast.add({ title: t('gallery.errorTitle'), description: t('gallery.errorDescription'), color: 'red' }))
+    .finally(() => isDeletingSelection.value = false)
+}
+
+// In selection mode a click ticks the photo instead of opening it
+function openOrSelect(event: Event, pathname: string) {
+  if (isSelecting.value) {
+    event.preventDefault()
+    toggle(pathname)
+
+    return
+  }
+
+  active.value = pathname.split('.')[0]
+}
+
 async function clearSession() {
   disconnect.value = true
 
@@ -74,7 +105,17 @@ async function clearSession() {
       ref="dropZoneRef"
       class="relative h-screen gap-5.5 p-4"
     >
-      <BottomMenu class="bottom-menu">
+      <ImageSelectionMenu
+        v-if="isSelecting"
+        :selected-count="selectedCount"
+        @toggle-all="toggleAll(images.map(image => image.pathname))"
+        @cancel="stopSelecting"
+        @delete="isDeleteModalOpen = true"
+      />
+      <BottomMenu
+        v-else
+        class="bottom-menu"
+      >
         <template #logo>
           <img
             src="/logo.svg"
@@ -89,6 +130,14 @@ async function clearSession() {
         </template>
         <template #buttons>
           <div class="flex gap-x-2">
+            <UButton
+              v-if="loggedIn && images.length"
+              :icon="ICONS.select"
+              color="neutral"
+              variant="ghost"
+              :aria-label="t('selection.start')"
+              @click="startSelecting"
+            />
             <UButton
               v-if="loggedIn"
               :loading="disconnect"
@@ -144,6 +193,12 @@ async function clearSession() {
             @confirm="uploadReadyPhotos"
             @closed="resetUploadQueue"
           />
+          <ImageDeleteModal
+            v-model:open="isDeleteModalOpen"
+            :count="selectedCount"
+            :is-deleting="isDeletingSelection"
+            @confirm="deleteSelection"
+          />
           <UploadButton
             type="submit"
             class="mb-6"
@@ -173,8 +228,15 @@ async function clearSession() {
             :key="image.pathname"
             class="relative w-full group masonry-item"
           >
+            <UCheckbox
+              v-if="isSelecting"
+              :model-value="isSelected(image.pathname)"
+              :aria-label="t('selection.photoCheckbox')"
+              class="absolute top-4 left-4 z-9999"
+              @update:model-value="toggle(image.pathname)"
+            />
             <UButton
-              v-if="loggedIn"
+              v-if="loggedIn && !isSelecting"
               :loading="deletingImg === image.pathname"
               color="gray"
               :icon="ICONS.trash"
@@ -183,14 +245,14 @@ async function clearSession() {
             />
             <NuxtLink
               :to="`/detail/${image.pathname.split('.')[0]}`"
-              @click="active = image.pathname.split('.')[0]"
+              @click="openOrSelect($event, image.pathname)"
             >
               <img
                 v-if="image"
                 width="527"
                 height="430"
                 :src="`/images/${image.pathname}`"
-                :class="{ imageEl: image.pathname.split('.')[0] === active }"
+                :class="{ 'imageEl': image.pathname.split('.')[0] === active, 'ring-2 ring-primary': isSelected(image.pathname) }"
                 class="h-auto w-full max-h-107.5 rounded-md transition-all duration-200 border-image brightness-[.8] hover:brightness-100 will-change-[filter] object-cover"
               >
             </NuxtLink>

@@ -9,6 +9,8 @@ export const ICONS = {
   photo: 'i-lucide-image',
   previous: 'i-lucide-chevron-left',
   ready: 'i-lucide-circle-check',
+  select: 'i-lucide-list-checks',
+  selectAll: 'i-lucide-check-check',
   signOut: 'i-lucide-power',
   spinner: 'i-lucide-loader-circle',
   trash: 'i-lucide-trash-2',

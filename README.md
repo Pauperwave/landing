@@ -52,3 +52,9 @@ Una volta sola, nella dashboard di Cloudflare: creare il bucket, una chiave API 
 1. Accedi al sito con la password admin (pulsante "Accedi" in basso)
 2. Trascina/seleziona le nuove foto per caricarle
 3. Le foto caricate compaiono subito nella galleria pubblica
+
+## Eliminare più foto insieme
+
+1. Da admin, tocca il pulsante "Seleziona le foto" nel menu in basso
+2. Spunta le foto da togliere (o usa "Seleziona tutte")
+3. Premi il cestino e conferma nella finestra, che indica quante foto verranno eliminate

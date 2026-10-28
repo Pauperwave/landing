@@ -84,6 +84,18 @@
     "errorTitle": "Si è verificato un errore",
     "errorDescription": "Riprova."
   },
+  "selection": {
+    "start": "Seleziona le foto",
+    "cancel": "Esci dalla selezione",
+    "toggleAll": "Seleziona o deseleziona tutte le foto",
+    "delete": "Elimina le foto selezionate",
+    "count": "Nessuna foto selezionata | 1 foto selezionata | {count} foto selezionate",
+    "photoCheckbox": "Seleziona la foto",
+    "modalTitle": "Elimina le foto",
+    "modalDescription": "Stai per eliminare {count} foto dalla galleria. L'operazione non si può annullare.",
+    "cancelDelete": "Annulla",
+    "confirm": "Elimina {count} foto"
+  },
   "uploadButton": {
     "desktop": "Clicca o trascina le foto per caricarle",
     "touch": "Tocca per caricare"

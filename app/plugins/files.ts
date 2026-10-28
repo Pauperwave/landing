@@ -24,13 +24,20 @@ export default defineNuxtPlugin(() => {
     getImages()
   }
 
+  async function deleteImages(pathnames: string[]) {
+    await $fetch('/api/images/delete', { method: 'POST', body: { pathnames } })
+
+    getImages()
+  }
+
   return {
     provide: {
       file: {
         getImages,
         images,
         uploadImage,
-        deleteImage
+        deleteImage,
+        deleteImages
       } as FilePlugin
     }
   }

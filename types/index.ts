@@ -5,6 +5,7 @@ export interface FilePlugin {
   images: Ref<BlobObject[]>
   uploadImage: (image: File) => Promise<void>
   deleteImage: (pathname: string) => Promise<void>
+  deleteImages: (pathnames: string[]) => Promise<void>
 }
 
 export type QueuedPhotoStatus = 'waiting' | 'compressing' | 'ready' | 'uploading' | 'uploaded' | 'failed'
