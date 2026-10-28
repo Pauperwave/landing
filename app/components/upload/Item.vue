@@ -6,6 +6,8 @@ const { photo, isRemovable } = defineProps<{
   isRemovable: boolean
 }>()
 
+const { t } = useI18n()
+
 const emit = defineEmits<{
   remove: []
 }>()
@@ -35,7 +37,7 @@ const emit = defineEmits<{
       :icon="ICONS.close"
       color="neutral"
       variant="ghost"
-      aria-label="Togli la foto dall'elenco"
+      :aria-label="t('upload.removeFromList')"
       @click="emit('remove')"
     />
   </li>

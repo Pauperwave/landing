@@ -8,6 +8,7 @@ const mansoryItem = ref<Array<HTMLElement>>([])
 const deletingImg = ref('')
 const disconnect = ref(false)
 
+const { t } = useI18n()
 const toast = useToast()
 const { deleteImage, images } = useFile()
 const { loggedIn, clear } = useUserSession()
@@ -55,7 +56,7 @@ async function deleteFile(pathname: string) {
   deletingImg.value = pathname
 
   await deleteImage(pathname)
-    .catch(() => toast.add({ title: 'An error occured', description: 'Please try again', color: 'red' }))
+    .catch(() => toast.add({ title: t('gallery.errorTitle'), description: t('gallery.errorDescription'), color: 'red' }))
     .finally(() => deletingImg.value = '')
 }
 
@@ -83,7 +84,7 @@ async function clearSession() {
         </template>
         <template #description>
           <p class="bottom-menu-description text-sm/tight sm:text-base/normal  ">
-            Pauperwave - Eventi
+            {{ t('home.menuTitle') }}
           </p>
         </template>
         <template #buttons>
@@ -98,7 +99,7 @@ async function clearSession() {
             />
             <UModal
               v-model:open="isOpen"
-              title="Accedi per caricare le foto"
+              :title="t('login.title')"
               :close="{
                 color: 'gray',
                 variant: 'outline',
@@ -107,10 +108,10 @@ async function clearSession() {
             >
               <UButton
                 v-if="!loggedIn"
-                label="Accedi"
+                :label="t('login.action')"
                 color="primary"
                 variant="ghost"
-                aria-label="Accedi"
+                :aria-label="t('login.action')"
                 class="mr-4 sm:mr-0"
               />
               <template #body>
@@ -155,10 +156,10 @@ async function clearSession() {
           class="text-2xl text-white flex flex-col gap-y-4 items-center justify-center size-full  pb-8"
         >
           <h1 class="font-medium text-5xl">
-            Pauperwave
+            {{ t('app.name') }}
           </h1>
           <p class="text-gray-400">
-            Le foto dei nostri eventi
+            {{ t('home.tagline') }}
           </p>
         </div>
 

@@ -5,6 +5,7 @@ const { fetch: refreshSession } = useUserSession()
 const password = ref('')
 const loading = ref(false)
 
+const { t } = useI18n()
 const toast = useToast()
 
 async function login() {
@@ -20,8 +21,8 @@ async function login() {
     })
     .catch((err) => {
       toast.add({
-        title: `Errore ${err.statusCode}`,
-        description: `${err.data?.message || err.message}. Riprova.`,
+        title: t('login.errorTitle', { code: err.statusCode }),
+        description: t('login.errorDescription', { message: err.data?.message || err.message }),
         color: 'red'
       })
     })
@@ -37,7 +38,7 @@ async function login() {
     <UInput
       v-model="password"
       type="password"
-      placeholder="Inserisci la password"
+      :placeholder="t('login.passwordPlaceholder')"
       :icon="ICONS.key"
       class="w-60!"
     />
@@ -45,7 +46,7 @@ async function login() {
     <UButton
       :loading="loading"
       type="submit"
-      label="Accedi"
+      :label="t('login.action')"
       color="primary"
       variant="ghost"
       class="px-4"

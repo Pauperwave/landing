@@ -18,6 +18,18 @@ Documento vivo: decisioni prese e perché, in ordine cronologico. Per il changel
 
 **Esito:** dopo il secondo deploy il sito risponde 200 senza reindirizzamenti e `/api/images` restituisce una lista vuota, quindi la connessione S3 al bucket funziona. Il caricamento di una foto come admin e la sua rilettura non sono ancora stati provati.
 
+## 2026-10-28 — Tutte le stringhe in it.json, sito solo in italiano
+
+**Richiesta:** togliere le stringhe dal codice, servire il sito solo in italiano e dichiarare la lingua nell'`<head>`, anche per il controllo di accessibilità di Google.
+
+**Come:** `@nuxtjs/i18n` con un solo locale (`it`, `language: 'it-IT'`), `strategy: 'no_prefix'` e `detectBrowserLanguage: false`: gli indirizzi non cambiano e non c'è nessuna scelta di lingua. Tutti i testi stanno in `i18n/locales/it.json` e si leggono con `t('chiave')`; le chiavi dei siti elencati in `/siti` sono dinamiche (`sites.items.<chiave>`).
+- `<html lang="it-IT">` esce da `useHead` in `app.vue`, con il valore del locale, e `og:locale` è `it_IT`. Verificato sul server di produzione.
+- `UApp` riceve il locale italiano di Nuxt UI, così anche i testi interni dei suoi componenti (per esempio il pulsante di chiusura di una modale) sono in italiano.
+- Le stringhe in inglese dell'interfaccia admin ("Click or Drag & drop to upload", "An error occured", i tooltip della pagina di dettaglio) sono ora in italiano.
+- `app/utils/translations.test.ts` fallisce se una chiave letterale usata nel codice non esiste in `it.json`.
+
+**Fuori da it.json:** i messaggi tecnici delle API del server (per esempio `Missing image pathname`), il `console.warn` di sviluppo e `site.description` in `nuxt.config.ts`, che è configurazione e non interfaccia.
+
 ## 2026-10-28 — Nomi dei file casuali
 
 **Problema:** il nome di una foto finisce nel suo indirizzo pubblico (`/images/<nome>` e `/detail/<nome>`). Il suffisso casuale che NuxtHub aggiungeva (`addRandomSuffix`) evitava solo le collisioni: il nome originale, con eventuali nomi di persone o date, restava leggibile.

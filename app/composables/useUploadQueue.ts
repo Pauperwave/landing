@@ -2,6 +2,7 @@ import type { QueuedPhoto, UploadPhase } from '../../types'
 
 // The photos picked by the admin go through two steps in series: shrinking, then (after a confirmation) uploading
 export function useUploadQueue() {
+  const { t } = useI18n()
   const { uploadImage } = useFile()
 
   const photos = ref<QueuedPhoto[]>([])
@@ -59,7 +60,7 @@ export function useUploadQueue() {
 
         if (photo.prepared.size > MAX_UPLOAD_SIZE_IN_BYTES) {
           photo.status = 'failed'
-          photo.errorMessage = 'Troppo pesante anche dopo la riduzione'
+          photo.errorMessage = t('upload.tooHeavy')
         }
         else {
           photo.status = 'ready'
@@ -88,7 +89,7 @@ export function useUploadQueue() {
           const uploadError = error as { data?: { message?: string }, message?: string }
 
           photo.status = 'failed'
-          photo.errorMessage = uploadError.data?.message || uploadError.message || 'Caricamento non riuscito'
+          photo.errorMessage = uploadError.data?.message || uploadError.message || t('upload.failedFallback')
         }
       }
     }

@@ -8,6 +8,7 @@ defineProps({
   }
 })
 
+const { t } = useI18n()
 const route = useRoute()
 
 function isCurrentImage(pathname: string) {
@@ -30,7 +31,7 @@ function isCurrentImage(pathname: string) {
         width="83"
         height="51"
         :src="`/images/${thumbnail.pathname}`"
-        :alt="PHOTO_ALT_TEXT"
+        :alt="t('photo.alt')"
         class="object-cover rounded-md transition-all duration-500 hover:brightness-100 w-20.75 h-12.75"
         :class="isCurrentImage(thumbnail.pathname) ? 'active brightness-100' : 'opacity-75 brightness-50'"
       >

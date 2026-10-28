@@ -6,28 +6,30 @@ const { phase, readyCount } = defineProps<{
   readyCount: number
 }>()
 
+const { t } = useI18n()
+
 const emit = defineEmits<{
   confirm: []
   close: []
 }>()
 
 const confirmLabels = computed<Record<Exclude<UploadPhase, 'done'>, string>>(() => ({
-  compressing: 'Riduzione in corso',
-  review: `Carica ${readyCount} foto`,
-  uploading: 'Caricamento in corso'
+  compressing: t('upload.shrinking'),
+  review: t('upload.confirm', { count: readyCount }),
+  uploading: t('upload.uploading')
 }))
 </script>
 
 <template>
   <UButton
     v-if="phase === 'done'"
-    label="Chiudi"
+    :label="t('upload.close')"
     color="primary"
     @click="emit('close')"
   />
   <template v-else>
     <UButton
-      label="Annulla"
+      :label="t('upload.cancel')"
       color="neutral"
       variant="outline"
       :disabled="phase === 'uploading'"

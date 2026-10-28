@@ -6,17 +6,21 @@ const { status, errorMessage = null } = defineProps<{
   errorMessage?: string | null
 }>()
 
-const appearances: Record<QueuedPhotoStatus, { label: string, icon: string, textClass: string, isSpinning: boolean }> = {
-  waiting: { label: 'In attesa', icon: ICONS.waiting, textClass: 'text-gray-400', isSpinning: false },
-  compressing: { label: 'Riduzione in corso', icon: ICONS.spinner, textClass: 'text-gray-300', isSpinning: true },
-  ready: { label: 'Pronta', icon: ICONS.ready, textClass: 'text-green-400', isSpinning: false },
-  uploading: { label: 'Caricamento in corso', icon: ICONS.spinner, textClass: 'text-gray-300', isSpinning: true },
-  uploaded: { label: 'Caricata', icon: ICONS.ready, textClass: 'text-green-400', isSpinning: false },
-  failed: { label: 'Errore', icon: ICONS.failed, textClass: 'text-red-400', isSpinning: false }
+const { t } = useI18n()
+
+const appearances: Record<QueuedPhotoStatus, { icon: string, textClass: string, isSpinning: boolean }> = {
+  waiting: { icon: ICONS.waiting, textClass: 'text-gray-400', isSpinning: false },
+  compressing: { icon: ICONS.spinner, textClass: 'text-gray-300', isSpinning: true },
+  ready: { icon: ICONS.ready, textClass: 'text-green-400', isSpinning: false },
+  uploading: { icon: ICONS.spinner, textClass: 'text-gray-300', isSpinning: true },
+  uploaded: { icon: ICONS.ready, textClass: 'text-green-400', isSpinning: false },
+  failed: { icon: ICONS.failed, textClass: 'text-red-400', isSpinning: false }
 }
 
 const appearance = computed(() => appearances[status])
-const text = computed(() => status === 'failed' && errorMessage ? `${appearance.value.label}: ${errorMessage}` : appearance.value.label)
+const text = computed(() => status === 'failed' && errorMessage
+  ? t('upload.status.failedWithReason', { reason: errorMessage })
+  : t(`upload.status.${status}`))
 </script>
 
 <template>

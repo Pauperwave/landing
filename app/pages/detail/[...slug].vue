@@ -2,6 +2,7 @@
 import type { BlobObject } from '@nuxthub/core/blob'
 
 const route = useRoute()
+const { t } = useI18n()
 const { images } = useFile()
 const origin = useRequestURL().origin
 
@@ -15,10 +16,10 @@ const imageUrl = computed(() => image.value ? `${origin}/images/${image.value.pa
 
 // SEO meta tags for individual images; the file name is random, so the text is the same for every photo
 useSeoHead({
-  title: () => image.value ? 'Foto degli eventi - Pauperwave' : undefined,
-  description: () => image.value ? 'Una foto degli eventi organizzati dall\'associazione Pauperwave.' : undefined,
+  title: () => image.value ? t('photo.pageTitle') : undefined,
+  description: () => image.value ? t('photo.pageDescription') : undefined,
   image: imageUrl,
-  imageAlt: () => image.value ? PHOTO_ALT_TEXT : undefined
+  imageAlt: () => image.value ? t('photo.alt') : undefined
 })
 </script>
 

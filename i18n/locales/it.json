@@ -1,0 +1,115 @@
+{
+  "app": {
+    "name": "Pauperwave",
+    "description": "Foto ed eventi dell'associazione Pauperwave."
+  },
+  "home": {
+    "title": "Pauperwave - Galleria eventi",
+    "description": "Le foto degli eventi organizzati dall'associazione Pauperwave.",
+    "menuTitle": "Pauperwave - Eventi",
+    "tagline": "Le foto dei nostri eventi"
+  },
+  "sites": {
+    "title": "Siti Pauperwave",
+    "description": "Tutti i siti e gli strumenti dell'associazione Pauperwave.",
+    "heading": "I siti di Pauperwave",
+    "intro": "Tutti gli indirizzi dell'associazione, in un posto solo.",
+    "items": {
+      "blog": {
+        "name": "Blog",
+        "description": "Articoli, decklist e report sul formato Pauper."
+      },
+      "choose": {
+        "name": "Choose a Commander",
+        "description": "Tutti i comandanti legali in Commander, con filtri e statistiche."
+      },
+      "mtgo": {
+        "name": "Pauper Deck Normalizer",
+        "description": "Converte le liste da MTGO al formato del blog."
+      },
+      "calendar": {
+        "name": "Calendario",
+        "description": "Gli eventi dell'associazione, con file ICS da aggiungere al calendario."
+      },
+      "membership": {
+        "name": "Tesseramento",
+        "description": "Il modulo per associarsi a Pauperwave."
+      },
+      "cityChampionship": {
+        "name": "Campionato Cittadino",
+        "description": "La classifica del Campionato Cittadino."
+      },
+      "pauperRanking": {
+        "name": "Classifica Pauper",
+        "description": "La classifica del formato Pauper."
+      },
+      "edhRanking": {
+        "name": "Classifica EDH",
+        "description": "La classifica del formato Commander (EDH)."
+      },
+      "premodernRanking": {
+        "name": "Classifica Premodern",
+        "description": "La classifica del formato Premodern."
+      },
+      "management": {
+        "name": "Gestionale",
+        "description": "L'area riservata dei soci (richiede l'accesso)."
+      }
+    }
+  },
+  "photo": {
+    "alt": "Foto di un evento Pauperwave",
+    "pageTitle": "Foto degli eventi - Pauperwave",
+    "pageDescription": "Una foto degli eventi organizzati dall'associazione Pauperwave."
+  },
+  "detail": {
+    "backToGallery": "Torna alla galleria",
+    "openInNewTab": "Apri in una nuova scheda",
+    "openOriginal": "Apri l'immagine originale",
+    "download": "Scarica",
+    "downloadImage": "Scarica l'immagine",
+    "previous": "Precedente",
+    "goToPrevious": "Vai alla foto precedente",
+    "next": "Successiva",
+    "goToNext": "Vai alla foto successiva"
+  },
+  "login": {
+    "title": "Accedi per caricare le foto",
+    "action": "Accedi",
+    "passwordPlaceholder": "Inserisci la password",
+    "errorTitle": "Errore {code}",
+    "errorDescription": "{message}. Riprova."
+  },
+  "gallery": {
+    "errorTitle": "Si è verificato un errore",
+    "errorDescription": "Riprova."
+  },
+  "uploadButton": {
+    "desktop": "Clicca o trascina le foto per caricarle",
+    "touch": "Tocca per caricare"
+  },
+  "upload": {
+    "modalTitle": "Carica foto",
+    "modalDescription": "Controlla le anteprime: ogni foto viene ridotta prima del caricamento.",
+    "cancel": "Annulla",
+    "close": "Chiudi",
+    "confirm": "Carica {count} foto",
+    "shrinking": "Riduzione in corso",
+    "uploading": "Caricamento in corso",
+    "removeFromList": "Togli la foto dall'elenco",
+    "tooHeavy": "Troppo pesante anche dopo la riduzione",
+    "failedFallback": "Caricamento non riuscito",
+    "status": {
+      "waiting": "In attesa",
+      "compressing": "Riduzione in corso",
+      "ready": "Pronta",
+      "uploading": "Caricamento in corso",
+      "uploaded": "Caricata",
+      "failed": "Errore",
+      "failedWithReason": "Errore: {reason}"
+    }
+  },
+  "version": {
+    "justNow": "proprio ora"
+  }
+}

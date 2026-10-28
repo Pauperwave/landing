@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@vueuse/nuxt',
     'nuxt-auth-utils',
+    '@nuxtjs/i18n',
     '@nuxtjs/seo'
   ],
   devtools: { enabled: true },
@@ -81,6 +82,17 @@ export default defineNuxtConfig({
         commaDangle: 'never'
       }
     }
+  },
+
+  // The site is served in Italian only: one locale, no prefix in the addresses, no language detection
+  i18n: {
+    // `language` is the tag written in <html lang>
+    locales: [{ code: 'it', language: 'it-IT', name: 'Italiano', file: 'it.json' }],
+    defaultLocale: 'it',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: false,
+    langDir: 'locales/',
+    vueI18n: './i18n.config.ts'
   },
 
   // The scan also reads .ts files, since the icon names are listed in app/utils/icons.ts

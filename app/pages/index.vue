@@ -1,7 +1,9 @@
 <script setup lang="ts">
+const { t } = useI18n()
+
 useSeoHead({
-  title: 'Pauperwave - Galleria eventi',
-  description: 'Le foto degli eventi organizzati dall\'associazione Pauperwave.'
+  title: () => t('home.title'),
+  description: () => t('home.description')
 })
 </script>
 

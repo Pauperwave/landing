@@ -7,6 +7,8 @@ const { photos, phase, readyCount } = defineProps<{
   readyCount: number
 }>()
 
+const { t } = useI18n()
+
 const open = defineModel<boolean>('open', { required: true })
 
 const emit = defineEmits<{
@@ -21,8 +23,8 @@ const isUploading = computed(() => phase === 'uploading')
 <template>
   <UModal
     v-model:open="open"
-    title="Carica foto"
-    description="Controlla le anteprime: ogni foto viene ridotta prima del caricamento."
+    :title="t('upload.modalTitle')"
+    :description="t('upload.modalDescription')"
     :dismissible="!isUploading"
     :close="!isUploading"
     :ui="{ footer: 'justify-end' }"

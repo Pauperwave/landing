@@ -10,6 +10,7 @@ defineProps({
   }
 })
 
+const { t } = useI18n()
 const isSmallScreen = useMediaQuery('(max-width: 1024px)')
 </script>
 
@@ -42,7 +43,7 @@ const isSmallScreen = useMediaQuery('(max-width: 1024px)')
             <span
               class="absolute m-auto opacity-0 group-hover:opacity-100 group-hover:translate-y-5 transition-all duration-200 "
               :class="isOverDropZone ? 'text-green-400' : 'text-gray-400'"
-            >Click or Drag & drop to upload</span>
+            >{{ t('uploadButton.desktop') }}</span>
           </div>
         </div>
         <div
@@ -54,7 +55,7 @@ const isSmallScreen = useMediaQuery('(max-width: 1024px)')
               :name="ICONS.upload"
               class="size-12  text-white"
             />
-            <span class="text-white">Press to upload</span>
+            <span class="text-white">{{ t('uploadButton.touch') }}</span>
           </div>
         </div>
       </div>

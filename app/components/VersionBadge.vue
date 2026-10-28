@@ -1,8 +1,9 @@
 <script setup lang="ts">
-// Ported from PrestaBici's PbVersionBadge, with the Italian wording fixed since this site has no i18n
+// Ported from PrestaBici's PbVersionBadge
 import { formatElapsed, formatUpdatedAt } from '~/utils/timeSince'
 
-const LANGUAGE = 'it-IT'
+const { t, localeProperties } = useI18n()
+const language = localeProperties.value.language ?? 'it-IT'
 
 const {
   public: { gitCommitSha, gitCommitDate, gitCommitCount }
@@ -27,16 +28,16 @@ const elapsed = computed(() => {
   if (!gitCommitDate || !now.value) {
     return null
   }
-  return formatElapsed(gitCommitDate, now.value, LANGUAGE)
+  return formatElapsed(gitCommitDate, now.value, language)
 })
 
 const updatedTime = computed(() => {
   if (!elapsed.value) {
     return ''
   }
-  return elapsed.value.isNow ? 'proprio ora' : elapsed.value.text
+  return elapsed.value.isNow ? t('version.justNow') : elapsed.value.text
 })
-const updatedAtText = gitCommitDate ? formatUpdatedAt(gitCommitDate, LANGUAGE) : ''
+const updatedAtText = gitCommitDate ? formatUpdatedAt(gitCommitDate, language) : ''
 </script>
 
 <template>

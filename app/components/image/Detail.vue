@@ -5,6 +5,7 @@ import { decodeImageSlug } from '~/utils/url'
 const bottomMenu = ref<HTMLElement>()
 const imageEl = ref<HTMLImageElement>()
 
+const { t } = useI18n()
 const { images } = useFile()
 
 const isSmallScreen = useMediaQuery('(max-width: 1024px)')
@@ -73,7 +74,7 @@ onMounted(() => {
         >
           <template #description>
             <p class="bottom-menu-description">
-              Pauperwave
+              {{ t('app.name') }}
             </p>
           </template>
           <template #buttons>
@@ -82,7 +83,7 @@ onMounted(() => {
                 <!-- back to gallery (desktop & not the first or last image) -->
                 <UTooltip
                   v-if="!(isFirstImg || isLastImg) || isSmallScreen"
-                  text="Back to gallery"
+                  :text="t('detail.backToGallery')"
                   :shortcuts="['Esc']"
                 >
                   <UButton
@@ -91,12 +92,12 @@ onMounted(() => {
                     to="/"
                     size="md"
                     :icon="ICONS.gallery"
-                    aria-label="Back to gallery"
+                    :aria-label="t('detail.backToGallery')"
                     class="back flex transition-colors duration-200"
                   />
                 </UTooltip>
                 <!-- open original -->
-                <UTooltip text="Open in a new tab">
+                <UTooltip :text="t('detail.openInNewTab')">
                   <UButton
                     variant="ghost"
                     color="gray"
@@ -104,18 +105,18 @@ onMounted(() => {
                     size="md"
                     :to="`/images/${image.pathname}`"
                     target="_blank"
-                    aria-label="Open original image"
+                    :aria-label="t('detail.openOriginal')"
                   />
                 </UTooltip>
                 <!-- download original image -->
-                <UTooltip text="Download">
+                <UTooltip :text="t('detail.download')">
                   <UButton
                     variant="ghost"
                     color="gray"
                     :icon="ICONS.download"
                     size="md"
                     class="hidden md:flex"
-                    aria-label="Download image"
+                    :aria-label="t('detail.downloadImage')"
                     @click="downloadImage(image.pathname)"
                   />
                 </UTooltip>
@@ -129,7 +130,7 @@ onMounted(() => {
             <!-- previous image if not the first image -->
             <UTooltip
               v-if="!isFirstImg"
-              text="Previous"
+              :text="t('detail.previous')"
               :shortcuts="['←']"
             >
               <UButton
@@ -139,7 +140,7 @@ onMounted(() => {
                 size="lg"
                 :icon="ICONS.previous"
                 class="hidden md:flex ml-4"
-                aria-label="Go to previous image"
+                :aria-label="t('detail.goToPrevious')"
                 @click="() => { active === image.pathname.split('.')[0] }"
               />
             </UTooltip>
@@ -150,7 +151,7 @@ onMounted(() => {
             >
               <!-- back to gallery if first image -->
               <UTooltip
-                text="Back to gallery"
+                :text="t('detail.backToGallery')"
                 :shortcuts="['Esc']"
               >
                 <UButton
@@ -159,7 +160,7 @@ onMounted(() => {
                   color="gray"
                   variant="ghost"
                   class="back hidden md:flex ml-4 transition-colors duration-200"
-                  aria-label="Back to gallery"
+                  :aria-label="t('detail.backToGallery')"
                   @click="() => { active === image.pathname.split('.')[0] }"
                 >
                   <UIcon
@@ -176,7 +177,7 @@ onMounted(() => {
                 v-if="image"
                 ref="imageEl"
                 :src="`/images/${image.pathname}`"
-                :alt="PHOTO_ALT_TEXT"
+                :alt="t('photo.alt')"
                 class="rounded object-contain transition-all duration-200 block w-full"
                 :class="{ imageEl: route.params.slug?.[0] === image.pathname.split('.')[0] }"
                 crossorigin="anonymous"
@@ -186,7 +187,7 @@ onMounted(() => {
             <!-- next image (if not the last image) -->
             <UTooltip
               v-if="!isLastImg"
-              text="Next"
+              :text="t('detail.next')"
               :shortcuts="['→']"
             >
               <UButton
@@ -196,7 +197,7 @@ onMounted(() => {
                 size="lg"
                 :icon="ICONS.next"
                 class="hidden md:flex mr-4 rounded-full"
-                aria-label="Go to next image"
+                :aria-label="t('detail.goToNext')"
                 @click="() => { active === image.pathname.split('.')[0] }"
               />
             </UTooltip>
@@ -204,7 +205,7 @@ onMounted(() => {
             <!-- back to gallery if last image -->
             <UTooltip
               v-else
-              text="Back to gallery"
+              :text="t('detail.backToGallery')"
               :shortcuts="['Esc']"
             >
               <div class="flex">
@@ -214,7 +215,7 @@ onMounted(() => {
                   to="/"
                   size="xl"
                   class="back hidden md:flex mr-4 transition-colors duration-200"
-                  aria-label="Back to gallery"
+                  :aria-label="t('detail.backToGallery')"
                   @click="() => { active === image.pathname.split('.')[0] }"
                 >
                   <UIcon

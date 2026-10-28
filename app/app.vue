@@ -1,24 +1,26 @@
 <script setup lang="ts">
-const { getImages } = useFile()
+import { it } from '@nuxt/ui/locale'
 
+const { getImages } = useFile()
+const { t, localeProperties } = useI18n()
+
+// The language of the page, so that browsers, screen readers and accessibility checks know it
 useHead({
   link: [
     { rel: 'icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    lang: 'it'
+    lang: localeProperties.value.language
   }
 })
 
-const title = 'Pauperwave'
-const description = 'Foto ed eventi dell\'associazione Pauperwave.'
+useSeoHead({
+  title: () => t('app.name'),
+  description: () => t('app.description')
+})
 
 useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
-  ogSiteName: 'Pauperwave',
+  ogSiteName: () => t('app.name'),
   twitterCard: 'summary_large_image'
 })
 
@@ -30,7 +32,9 @@ await getImages()
 </script>
 
 <template>
+  <!-- Nuxt UI's own texts, such as the label of a modal's close button, are in Italian too -->
   <UApp
+    :locale="it"
     class="bg-black min-h-dvh overflow-x-auto relative"
     :class="{ 'flex flex-col md:block': isPhotoDetail }"
   >
