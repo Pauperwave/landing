@@ -55,7 +55,7 @@ export function useUploadQueue() {
 
       while (photo) {
         photo.status = 'compressing'
-        photo.prepared = await prepareImageForUpload(photo.original)
+        photo.prepared = anonymizeFileName(await prepareImageForUpload(photo.original))
 
         if (photo.prepared.size > MAX_UPLOAD_SIZE_IN_BYTES) {
           photo.status = 'failed'

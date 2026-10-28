@@ -30,7 +30,7 @@ function isCurrentImage(pathname: string) {
         width="83"
         height="51"
         :src="`/images/${thumbnail.pathname}`"
-        :alt="thumbnail.key"
+        :alt="PHOTO_ALT_TEXT"
         class="object-cover rounded-md transition-all duration-500 hover:brightness-100 w-20.75 h-12.75"
         :class="isCurrentImage(thumbnail.pathname) ? 'active brightness-100' : 'opacity-75 brightness-50'"
       >

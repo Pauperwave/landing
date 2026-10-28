@@ -11,15 +11,14 @@ const image = computed(() => {
   return images.value.find((file: BlobObject) => file.pathname.split('.')[0] === route.params.slug![0])
 })
 
-const imageName = computed(() => image.value?.pathname.split('.')[0]?.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()))
 const imageUrl = computed(() => image.value ? `${origin}/images/${image.value.pathname}` : undefined)
 
-// SEO meta tags for individual images
+// SEO meta tags for individual images; the file name is random, so the text is the same for every photo
 useSeoHead({
-  title: () => imageName.value ? `${imageName.value} - Pauperwave` : undefined,
-  description: () => imageName.value ? `Foto degli eventi Pauperwave: ${imageName.value}.` : undefined,
+  title: () => image.value ? 'Foto degli eventi - Pauperwave' : undefined,
+  description: () => image.value ? 'Una foto degli eventi organizzati dall\'associazione Pauperwave.' : undefined,
   image: imageUrl,
-  imageAlt: imageName
+  imageAlt: () => image.value ? PHOTO_ALT_TEXT : undefined
 })
 </script>
 

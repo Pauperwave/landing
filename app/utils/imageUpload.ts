@@ -64,3 +64,10 @@ export async function prepareImageForUpload(file: File): Promise<File> {
 
   return new File([encoded], `${nameWithoutExtension}.${extension}`, { type: encoded.type })
 }
+
+// The name of an uploaded photo ends up in its public address, so it is replaced with a random one
+export function anonymizeFileName(file: File): File {
+  const extension = file.name.match(/\.[^.]+$/)?.[0].toLowerCase() ?? ''
+
+  return new File([file], `${crypto.randomUUID()}${extension}`, { type: file.type })
+}

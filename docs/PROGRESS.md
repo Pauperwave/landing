@@ -18,6 +18,16 @@ Documento vivo: decisioni prese e perché, in ordine cronologico. Per il changel
 
 **Esito:** dopo il secondo deploy il sito risponde 200 senza reindirizzamenti e `/api/images` restituisce una lista vuota, quindi la connessione S3 al bucket funziona. Il caricamento di una foto come admin e la sua rilettura non sono ancora stati provati.
 
+## 2026-10-28 — Nomi dei file casuali
+
+**Problema:** il nome di una foto finisce nel suo indirizzo pubblico (`/images/<nome>` e `/detail/<nome>`). Il suffisso casuale che NuxtHub aggiungeva (`addRandomSuffix`) evitava solo le collisioni: il nome originale, con eventuali nomi di persone o date, restava leggibile.
+
+**Decisione:** ogni foto viene rinominata nel browser con un UUID (`anonymizeFileName` in `app/utils/imageUpload.ts`, applicata dopo la riduzione), mantenendo l'estensione. Due UUID non si scontrano, quindi `addRandomSuffix` è stato tolto dal server.
+
+**Conseguenza:** titolo e descrizione della pagina di dettaglio e il testo `alt` non si ricavano più dal nome del file, perché sarebbero una stringa casuale. Sono uguali per tutte le foto (`PHOTO_ALT_TEXT` in `app/utils/photo.ts` e testi fissi in `app/pages/detail/[...slug].vue`). Vale anche per le foto già online, che hanno ancora un nome leggibile ma perdono il titolo. Un titolo per foto, scritto dall'admin nella modale e salvato come metadato del file, è possibile ma non è stato fatto.
+
+**EXIF:** le foto che passano dalla riduzione perdono i metadati (posizione GPS, modello del telefono) perché vengono ridisegnate su un canvas. GIF e formati che il browser non legge partono invariati, con i loro metadati.
+
 ## 2026-10-28 — Caricamento di più foto con una modale di anteprima
 
 **Richiesta:** poter scegliere o rilasciare più foto insieme, vederne l'anteprima ridotta e caricarle in serie, invece di una alla volta.

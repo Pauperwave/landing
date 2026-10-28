@@ -176,7 +176,7 @@ onMounted(() => {
                 v-if="image"
                 ref="imageEl"
                 :src="`/images/${image.pathname}`"
-                :alt="image.pathname"
+                :alt="PHOTO_ALT_TEXT"
                 class="rounded object-contain transition-all duration-200 block w-full"
                 :class="{ imageEl: route.params.slug?.[0] === image.pathname.split('.')[0] }"
                 crossorigin="anonymous"
