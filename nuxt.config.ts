@@ -71,6 +71,9 @@ export default defineNuxtConfig({
     blob: true
   },
 
+  // Nuxt SEO 6 bundles AI Ready and Skew Protection by default; this site needs neither
+  aiReady: false,
+
   eslint: {
     config: {
       stylistic: {
@@ -89,5 +92,8 @@ export default defineNuxtConfig({
 
   seo: {
     redirectToCanonicalSiteUrl: true
-  }
+  },
+
+  // See aiReady above
+  skewProtection: false
 })
