@@ -231,7 +231,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 @media (min-width: 768px) {
   .imageEl {
     view-transition-name: vtn-image;
