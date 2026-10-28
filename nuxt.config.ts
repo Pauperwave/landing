@@ -1,3 +1,20 @@
+import { execSync } from 'node:child_process'
+import process from 'node:process'
+
+// The commit hash comes from the Vercel or GitHub build when it provides it, the date and count from
+// git, so all of them also show locally. Each is empty when git is not available.
+function git(args: string): string {
+  try {
+    return execSync(`git ${args}`).toString().trim()
+  }
+  catch {
+    return ''
+  }
+}
+
+// A shallow clone cannot count the commits, so the number is left out instead of being wrong
+const isShallowClone = git('rev-parse --is-shallow-repository') === 'true'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxthub/core',
@@ -30,6 +47,14 @@ export default defineNuxtConfig({
   ui: {
     theme: {
       colors: ['gray', 'red']
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      gitCommitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.GITHUB_SHA ?? git('log -1 --format=%H'),
+      gitCommitDate: git('log -1 --format=%cI'),
+      gitCommitCount: isShallowClone ? '' : git('rev-list --count HEAD')
     }
   },
 
