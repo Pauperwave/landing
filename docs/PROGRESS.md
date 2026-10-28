@@ -18,6 +18,18 @@ Documento vivo: decisioni prese e perché, in ordine cronologico. Per il changel
 
 **Esito:** dopo il secondo deploy il sito risponde 200 senza reindirizzamenti e `/api/images` restituisce una lista vuota, quindi la connessione S3 al bucket funziona. Il caricamento di una foto come admin e la sua rilettura non sono ancora stati provati.
 
+## 2026-10-28 — Foto ridotte nel browser (limite di 4,5 MB di Vercel)
+
+**Problema:** molte foto caricate dal pannello admin davano `413`. Il browser invia il file con un'unica richiesta `POST /api/images/upload` a una Vercel Function, e Vercel respinge i corpi oltre **4,5 MB** (`FUNCTION_PAYLOAD_TOO_LARGE`, documentazione *Vercel Functions Limits*) prima di avviare la funzione. Il limite di 8 MB in `upload.post.ts` non conta, perché il rifiuto avviene prima.
+
+**Decisione:** ridurre la foto nel browser prima dell'invio (`app/utils/imageUpload.ts`, usata da `app/plugins/files.ts`): lato lungo massimo 2560 px, ricodifica in WebP con qualità 0,85. In Safari, che non codifica WebP, si ripiega su JPEG. GIF e formati che il browser non decodifica (per esempio HEIC fuori da Safari) partono invariati. Se la copia ridotta non è più piccola dell'originale, si invia l'originale.
+
+**Alternative scartate:**
+- Caricamento a pezzi di NuxtHub: i pezzi predefiniti sono da 10 MiB, sopra il limite di Vercel.
+- Caricamento diretto su R2 con indirizzo firmato (la guida Vercel sul limite consiglia di non far passare i file dalla funzione): tiene i 8 MB, ma richiede un endpoint che firma e la regola CORS sul bucket. Da riprendere solo se servono file grandi anche dopo la riduzione.
+
+**Test:** `fitWithin`, il calcolo delle dimensioni, ha test unitari (`pnpm test`; la configurazione `vitest.config.ts` è nuova). La parte che usa canvas e `createImageBitmap` non è coperta dai test e va verificata nel browser.
+
 ## 2026-10-11 — Hosting su Vercel, foto su R2
 
 **Contesto:** il dominio `pauperwave.org` ha i nameserver di Vercel (`ns1/ns2.vercel-dns.com`) e l'apex risponde `DEPLOYMENT_NOT_FOUND`. La landing era pensata per NuxtHub su Cloudflare, ma non è mai stata pubblicata. Cloudflare Pages vuole i nameserver di Cloudflare per un dominio apex, e spostarli avrebbe toccato anche blog e app, che stanno su Vercel.

@@ -2,6 +2,8 @@
 
 Trail grezzo commit-by-commit, più recente in cima. Per il "perché" dietro le decisioni vedi [PROGRESS.md](PROGRESS.md).
 
+- `784a259` — Riduci le foto nel browser prima del caricamento: Vercel rifiuta i corpi oltre 4,5 MB
+- `7d74b3c` — Documenta le variabili d'ambiente di produzione e il primo deploy su photos.pauperwave.org
 - `99f8143` — Imposta photos.pauperwave.org come indirizzo canonico del sito
 - `8b5fdbe` — Scrivi le classi Tailwind in forma canonica (size-12 al posto di h-12 w-12)
 - `6a49551` — Aggiungi la regola enforce-canonical-classes di better-tailwindcss
